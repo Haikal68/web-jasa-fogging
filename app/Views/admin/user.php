@@ -46,6 +46,10 @@
                                         <?php foreach ($user as $j) : ?>
 
                                             <tr>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 720ab1eed87664b1bb1ac49786d4921c4f7b813c
                                                 <td>
                                                     <?= $i++; ?>
                                                 </td>
@@ -54,7 +58,11 @@
                                                 <td><?= $j['username']; ?></td>
                                                 <td><?= $j['name']; ?></td>
                                                 <td class="text-center">
+<<<<<<< HEAD
                                                     <a href="/admin/edituser/<?= $j['user_id']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Edit"><i class="fas fa-edit "></i></button></a>
+=======
+                                                    <a href="/admin/resetpass/<?= $j['user_id']; ?>"><button class=" btn btn-warning btn-sm rounded-3" title="Edit"><i class="fas fa-key "></i>Reset Password</button></a>
+>>>>>>> 720ab1eed87664b1bb1ac49786d4921c4f7b813c
                                                     <a class="btn-hapus" href="/admin/deleteuser/<?= $j['user_id']; ?>"><button class=" btn btn-danger btn-sm rounded-3" title="Delete"><i class="fas fa-trash "></i></button></a>
                                                 </td>
                                             </tr>

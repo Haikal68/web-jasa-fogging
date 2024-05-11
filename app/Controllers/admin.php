@@ -76,8 +76,19 @@ class admin extends BaseController
             'password_hash' => Password::hash("123456"),
             'active' => 1
         ]);
-
         session()->setFlashdata('pesan', 'User berhasil ditambahkan.');
+        return redirect()->to('/admin/users');
+    }
+
+    public function resetpass($id)
+    {
+
+        $user_myth = new UserModel();
+        $this->UsersModel->save([
+            'id' => $id,
+            'password_hash' => Password::hash("123456"),
+        ]);
+        session()->setFlashdata('pesan', 'Password berhasil direset.');
         return redirect()->to('/admin/users');
     }
 
