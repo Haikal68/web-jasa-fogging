@@ -6,14 +6,9 @@ use CodeIgniter\Model;
 
 class UsersModel extends Model
 {
-<<<<<<< HEAD
-    protected $table = 'tbl_mahasiswa';
-    protected $useTimeStamps = true;
-=======
     protected $table = 'users';
     protected $useTimeStamps = true;
     protected $allowedFields = ['fullname', 'username', 'email', 'password_hash', 'active'];
->>>>>>> 720ab1eed87664b1bb1ac49786d4921c4f7b813c
 
     public function getUsers()
     {
@@ -32,12 +27,9 @@ class UsersModel extends Model
     {
         return $this->db->table('users')->delete(array('id' => $user_id));
     }
-<<<<<<< HEAD
-=======
 
     public function addUser($data)
     {
         return $this->db->table('users')->insert($data);
     }
->>>>>>> 720ab1eed87664b1bb1ac49786d4921c4f7b813c
 }
