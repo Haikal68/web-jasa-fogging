@@ -13,18 +13,25 @@ class ServicesModel extends Model
 
     public function getservices()
     {
-        return $this->db->table('services')
-            ->join('categories', 'services.kategori_id = categories.kategori_id')
-            ->get()->getResultArray();
+        return $this->db->table('services')->get()->getResultArray();
     }
 
-    public function getservicesById($id)
+    public function getservicesById($service_id)
     {
-        return $this->db->table('services')->where('services_id', $id)->get()->getRowArray();
+        return $this->db->table('services')->where('service_id', $service_id)->get()->getRowArray();
+    }
+    public function addServices($data)
+    {
+        return $this->db->table('services')->insert($data);
     }
 
-    public function deleteservices($services_id)
+    public function deleteservices($service_id)
     {
-        return $this->db->table('services')->delete(array('services_id' => $services_id));
+        return $this->db->table('services')->delete(array('service_id' => $service_id));
+    }
+
+    public function updateServices($data, $service_id)
+    {
+        return $this->db->table('services')->update($data, array('service_id' => $service_id));
     }
 }

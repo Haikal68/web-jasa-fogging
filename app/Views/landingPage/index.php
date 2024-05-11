@@ -26,7 +26,10 @@
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#card1">Workers</a></li>
                     <li><a href="#service">Services</a></li>
-                    <li>Get Started</li>
+                    <li><a href="<?= base_url(); ?>/login" class="text-light">Login</a></li>
+                    <?php if (logged_in()) : ?>
+                        <li>Halo, <?= user()->username; ?></li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </header>

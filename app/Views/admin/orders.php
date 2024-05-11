@@ -4,14 +4,10 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Data Prodi</h1>
+            <h1>Data Pemesanan</h1>
         </div>
 
         <div class="section-body">
-            <a class="btn btn-primary" style="margin-bottom:20px" href="<?php echo base_url(); ?>/admin/tambah_prodi">
-                <i class=" fas fa-plus"></i>
-                Tambah Prodi
-            </a>
             <!-- <?php if (session()->getFlashdata('pesan')) : ?>
                 <div class="alert alert-success" role="alert">
                     <?= session()->getFlashdata('pesan'); ?>
@@ -23,7 +19,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Data Prodi</h4>
+                            <h4>Data orders</h4>
                         </div>
 
                         <div class="card-body">
@@ -34,26 +30,40 @@
                                             <th class="text-center">
                                                 #
                                             </th>
-                                            <th>Kode Prodi</th>
-                                            <th>Nama Program Studi</th>
-                                            <th>Jurusan</th>
+                                            <th>Kode Pemesanan</th>
+                                            <th>Nama Customer</th>
+                                            <th>Tanggal Pemesanan</th>
+                                            <th>Layanan</th>
+                                            <th>Total Harga</th>
+                                            <th>Status Pembayaran</th>
+                                            <th>Status Order</th>
+                                            <th>Worker</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        <?php foreach ($prodi as $j) : ?>
+                                        <?php foreach ($orders as $j) : ?>
+
                                             <tr>
                                                 <td>
                                                     <?= $i++; ?>
                                                 </td>
-                                                <td><?= $j['kode_prodi']; ?></td>
-                                                <td><?= $j['nama_program_studi']; ?></td>
-                                                <td><?= $j['nama_jurusan']; ?></td>
+                                                <td><?= $j['order_id']; ?></td>
+                                                <td><?= $j['customer_id']; ?></td>
+                                                <td><?= $j['tanggal_pemesanan']; ?></td>
+                                                <td><?= $j['tanggal_layanan']; ?></td>
+                                                <td><?= $j['alamat_layanan']; ?></td>
+                                                <td><?= $j['service_id']; ?></td>
+                                                <td>Rp <?= number_format($j['total_harga'], 0, ',', '.') ?></td>
+                                                <td><?= $j['status_pembayaran']; ?></td>
+                                                <td><?= $j['status_order']; ?></td>
+                                                <td><?= $j['teknisi_id']; ?></td>
+
 
                                                 <td class="text-center">
-                                                    <a href="/admin/editprodi/<?= $j['kode_prodi']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Edit"><i class="fas fa-edit "></i></button></a>
-                                                    <a class="btn-hapus" href="/admin/deleteprodi/<?= $j['kode_prodi']; ?>"><button class=" btn btn-danger btn-sm rounded-3" title="Delete"><i class="fas fa-trash "></i></button></a>
+                                                    <a href="/admin/editorders/<?= $j['service_id']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Edit"><i class="fas fa-edit "></i></button></a>
+                                                    <a class="btn-hapus" href="/admin/deleteorders/<?= $j['service_id']; ?>"><button class=" btn btn-danger btn-sm rounded-3" title="Delete"><i class="fas fa-trash "></i></button></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

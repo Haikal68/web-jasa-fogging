@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2024 at 01:35 PM
+-- Generation Time: May 11, 2024 at 12:06 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.12
 
@@ -55,7 +55,7 @@ INSERT INTO `auth_groups` (`id`, `name`, `description`) VALUES
 (1, 'admin', 'Site Administrator'),
 (2, 'user', 'Regular User'),
 (3, 'Manager', 'All Features Dashboard'),
-(4, 'Teknisi', 'Memproses Pesanan');
+(4, 'worker', 'Memproses Pesanan');
 
 -- --------------------------------------------------------
 
@@ -84,7 +84,8 @@ CREATE TABLE `auth_groups_users` (
 --
 
 INSERT INTO `auth_groups_users` (`group_id`, `user_id`) VALUES
-(1, 1);
+(1, 11),
+(2, 13);
 
 -- --------------------------------------------------------
 
@@ -108,7 +109,28 @@ CREATE TABLE `auth_logins` (
 INSERT INTO `auth_logins` (`id`, `ip_address`, `email`, `user_id`, `date`, `success`) VALUES
 (1, '::1', 'admin', NULL, '2024-05-10 09:50:12', 0),
 (2, '::1', 'admin', NULL, '2024-05-10 09:50:17', 0),
-(3, '::1', 'haikaltsc68@gmail.com', 1, '2024-05-10 10:24:49', 1);
+(3, '::1', 'haikaltsc68@gmail.com', 1, '2024-05-10 10:24:49', 1),
+(4, '::1', 'haikaltsc68@gmail.com', 1, '2024-05-10 12:35:22', 1),
+(5, '::1', 'haikaltsc68@gmail.com', 1, '2024-05-10 12:59:31', 1),
+(6, '::1', 'haikaltsc68@gmail.com', 1, '2024-05-10 13:47:47', 1),
+(7, '::1', 'haikaltsc68@gmail.com', 1, '2024-05-10 14:26:01', 1),
+(8, '::1', 'admin', NULL, '2024-05-10 15:49:20', 0),
+(9, '::1', 'haikal', NULL, '2024-05-10 15:49:38', 0),
+(10, '::1', 'haikaltsc@gmail.com', 3, '2024-05-10 15:49:46', 1),
+(11, '::1', 'pbku308@gmail.com', 4, '2024-05-10 15:50:27', 1),
+(12, '::1', 'haikaltsc@gmail.com', 3, '2024-05-10 15:50:55', 1),
+(13, '::1', 'haikaltsc@gmail.com', 3, '2024-05-10 15:51:42', 1),
+(14, '::1', 'admin', NULL, '2024-05-11 03:59:11', 0),
+(15, '::1', 'admin', NULL, '2024-05-11 03:59:17', 0),
+(16, '::1', 'haikaltsc@gmail.com', 3, '2024-05-11 03:59:24', 1),
+(17, '::1', 'haikaltsc@gmail.com', 3, '2024-05-11 08:02:39', 1),
+(18, '::1', 'pbku308@gmail.com', 11, '2024-05-11 08:03:28', 1),
+(19, '::1', 'pbku308@gmail.com', 11, '2024-05-11 08:05:28', 1),
+(20, '::1', 'pbku308@gmail.com', 11, '2024-05-11 08:37:03', 1),
+(21, '::1', 'hafid@gmail.com', 12, '2024-05-11 09:34:28', 1),
+(22, '::1', 'hafid@gmail.com', 13, '2024-05-11 09:36:29', 1),
+(23, '::1', 'hafid@gmail.com', 13, '2024-05-11 09:37:01', 1),
+(24, '::1', 'hafid@gmail.com', 13, '2024-05-11 10:04:43', 1);
 
 -- --------------------------------------------------------
 
@@ -173,18 +195,6 @@ CREATE TABLE `auth_users_permissions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categories`
---
-
-CREATE TABLE `categories` (
-  `kategori_id` int(11) NOT NULL,
-  `nama_kategori` varchar(100) NOT NULL,
-  `deskripsi` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `customers`
 --
 
@@ -192,6 +202,13 @@ CREATE TABLE `customers` (
   `customer_id` int(11) NOT NULL,
   `id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`customer_id`, `id`) VALUES
+(1, 13);
 
 -- --------------------------------------------------------
 
@@ -227,7 +244,6 @@ CREATE TABLE `orders` (
   `customer_id` int(11) NOT NULL,
   `tanggal_pemesanan` date NOT NULL,
   `tanggal_layanan` date NOT NULL,
-  `waktu_layanan` time NOT NULL,
   `alamat_layanan` text NOT NULL,
   `service_id` int(11) NOT NULL,
   `total_harga` decimal(10,2) NOT NULL,
@@ -235,6 +251,13 @@ CREATE TABLE `orders` (
   `status_order` enum('diproses','selesai','dibatalkan') NOT NULL DEFAULT 'diproses',
   `teknisi_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `customer_id`, `tanggal_pemesanan`, `tanggal_layanan`, `alamat_layanan`, `service_id`, `total_harga`, `status_pembayaran`, `status_order`, `teknisi_id`) VALUES
+(1, 1, '2024-05-11', '2024-05-12', 'Jl.Balai Desa', 7, 100000.00, 'pending', 'diproses', NULL);
 
 -- --------------------------------------------------------
 
@@ -281,6 +304,13 @@ CREATE TABLE `services` (
   `kategori_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`service_id`, `nama_layanan`, `deskripsi`, `harga`, `luas_area`, `durasi`, `kategori_id`) VALUES
+(7, 'Fogging Untuk Pengendalian Nyamukk', 'Lorem Ipsum Dolor sit amet', 23.00, 22, 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -312,7 +342,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `username`, `fullname`, `user_image`, `password_hash`, `reset_hash`, `reset_at`, `reset_expires`, `activate_hash`, `status`, `status_message`, `active`, `force_pass_reset`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'haikaltsc68@gmail.com', 'admin', NULL, 'avatar-1.png', '$2y$10$VRcFNdaXgJRsWcKB65oTvO6nxfJWVwdTXjhsA7l.8O6vExJojI7Wy', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2024-05-10 10:22:11', '2024-05-10 10:22:11', NULL);
+(11, 'pbku308@gmail.com', 'admin', 'Administrator', 'avatar-1.png', '$2y$10$R3pZCAItFU/ymzE7miUzu.22Irr/6XSWV1hxGhktU4zO7hGbIbLs6', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2024-05-11 08:03:02', '2024-05-11 08:03:02', NULL),
+(13, 'hafid@gmail.com', 'customer', NULL, 'avatar-1.png', '$2y$10$Ik3rdibx7ex7Ifomf8KWGeYbEB5MZ/b6OS9nBZG9gZ3.z7sy804La', NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, '2024-05-11 09:36:16', '2024-05-11 09:36:16', NULL);
 
 --
 -- Indexes for dumped tables
@@ -378,12 +409,6 @@ ALTER TABLE `auth_tokens`
 ALTER TABLE `auth_users_permissions`
   ADD KEY `auth_users_permissions_permission_id_foreign` (`permission_id`),
   ADD KEY `user_id_permission_id` (`user_id`,`permission_id`);
-
---
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`kategori_id`);
 
 --
 -- Indexes for table `customers`
@@ -456,7 +481,7 @@ ALTER TABLE `auth_groups`
 -- AUTO_INCREMENT for table `auth_logins`
 --
 ALTER TABLE `auth_logins`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `auth_permissions`
@@ -477,16 +502,10 @@ ALTER TABLE `auth_tokens`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-  MODIFY `kategori_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -498,7 +517,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -516,13 +535,13 @@ ALTER TABLE `schedules`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
@@ -566,8 +585,8 @@ ALTER TABLE `customers`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`teknisi_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`),
-  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`service_id`) REFERENCES `services` (`service_id`);
+  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`service_id`) REFERENCES `services` (`service_id`),
+  ADD CONSTRAINT `orders_ibfk_4` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`);
 
 --
 -- Constraints for table `payments`
@@ -580,12 +599,6 @@ ALTER TABLE `payments`
 --
 ALTER TABLE `schedules`
   ADD CONSTRAINT `schedules_ibfk_1` FOREIGN KEY (`teknisi_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `services`
---
-ALTER TABLE `services`
-  ADD CONSTRAINT `services_ibfk_1` FOREIGN KEY (`kategori_id`) REFERENCES `categories` (`kategori_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

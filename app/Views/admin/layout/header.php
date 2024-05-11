@@ -35,12 +35,13 @@
       <ul class="sidebar-menu">
         <li><a class="nav-link" href="/"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
         <li class="menu-header">MASTER DATA</li>
-        <li><a class="nav-link" href="/admin/jurusan"><i class="fas fa-university"></i> <span>Data Pemesanan</span></a></li>
-        <li><a class="nav-link" href="/admin/users"><i class="fas fa-university"></i> <span>Data User</span></a></li>
-        <li><a class="nav-link" href="/admin/categories"><i class="fas fa-university"></i> <span>Data Kategori</span></a></li>
-        <li><a class="nav-link" href="/admin/services"><i class="fas fa-university"></i> <span>Data Layanan</span></a></li>
-        <li class="menu-header">Pemesanan</li>
+        <li><a class="nav-link" href="/admin/orders"><i class="fas fa-university"></i> <span>Data Pemesanan</span></a></li>
 
+        <li><a class="nav-link" href="/admin/services"><i class="fas fa-university"></i> <span>Data Layanan</span></a></li>
+        <li class="menu-header">Manager</li>
+        <li><a class="nav-link" href="/admin/users"><i class="fas fa-university"></i> <span>Data User</span></a></li>
+
+        <li class="menu-header">Pemesanan</li>
         <li class="dropdown">
           <a href="#" class="nav-link has-dropdown"><i class="fas fa-bicycle"></i> <span>Report Data</span></a>
           <ul class="dropdown-menu">

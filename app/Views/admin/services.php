@@ -39,7 +39,6 @@
                                             <th>Harga</th>
                                             <th>Luas Area</th>
                                             <th>Durasi</th>
-                                            <th>Kategori</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -56,10 +55,10 @@
                                                 <td>Rp <?= number_format($j['harga'], 0, ',', '.') ?></td>
                                                 <td><?= $j['luas_area']; ?> m2</td>
                                                 <td><?= $j['durasi']; ?> jam</td>
-                                                <td><?= $j['nama_kategori']; ?></td>
+
                                                 <td class="text-center">
-                                                    <a href="/admin/edituser/<?= $j['service_id']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Edit"><i class="fas fa-edit "></i></button></a>
-                                                    <a class="btn-hapus" href="/admin/deleteuser/<?= $j['service_id']; ?>"><button class=" btn btn-danger btn-sm rounded-3" title="Delete"><i class="fas fa-trash "></i></button></a>
+                                                    <a href="/admin/editServices/<?= $j['service_id']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Edit"><i class="fas fa-edit "></i></button></a>
+                                                    <a class="btn-hapus" href="/admin/deleteServices/<?= $j['service_id']; ?>"><button class=" btn btn-danger btn-sm rounded-3" title="Delete"><i class="fas fa-trash "></i></button></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
