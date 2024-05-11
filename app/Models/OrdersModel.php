@@ -19,4 +19,9 @@ class OrdersModel extends Model
     {
         return $this->db->table('orders')->where('order_id', $order_id)->get()->getRowArray();
     }
+
+    public function addPesan($data)
+    {
+        return $this->db->table('orders')->insert($data);
+    }
 }

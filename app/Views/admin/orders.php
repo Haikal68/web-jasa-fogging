@@ -33,6 +33,7 @@
                                             <th>Kode Pemesanan</th>
                                             <th>Nama Customer</th>
                                             <th>Tanggal Pemesanan</th>
+                                            <th>Alamat</th>
                                             <th>Layanan</th>
                                             <th>Total Harga</th>
                                             <th>Status Pembayaran</th>
@@ -52,7 +53,6 @@
                                                 <td><?= $j['order_id']; ?></td>
                                                 <td><?= $j['customer_id']; ?></td>
                                                 <td><?= $j['tanggal_pemesanan']; ?></td>
-                                                <td><?= $j['tanggal_layanan']; ?></td>
                                                 <td><?= $j['alamat_layanan']; ?></td>
                                                 <td><?= $j['service_id']; ?></td>
                                                 <td>Rp <?= number_format($j['total_harga'], 0, ',', '.') ?></td>
@@ -62,8 +62,7 @@
 
 
                                                 <td class="text-center">
-                                                    <a href="/admin/editorders/<?= $j['service_id']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Edit"><i class="fas fa-edit "></i></button></a>
-                                                    <a class="btn-hapus" href="/admin/deleteorders/<?= $j['service_id']; ?>"><button class=" btn btn-danger btn-sm rounded-3" title="Delete"><i class="fas fa-trash "></i></button></a>
+                                                    <a href="/admin/editorders/<?= $j['service_id']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Edit"><i class="fas fa-check "></i>Konfirmasi</button></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

@@ -26,10 +26,16 @@
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#card1">Workers</a></li>
                     <li><a href="#service">Services</a></li>
-                    <li><a href="<?= base_url(); ?>/login" class="text-light">Login</a></li>
-                    <?php if (logged_in()) : ?>
-                        <li>Halo, <?= user()->username; ?></li>
-                    <?php endif; ?>
+                    <li>
+                        <a href="<?= logged_in() ? base_url() . '/logout' : base_url() . '/login'; ?>" class="text-light"><?php if (logged_in()) : ?>
+                                <ul>
+                                    Logout
+                                </ul>
+                            <?php else : ?>
+                                Login
+                            <?php endif; ?>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </header>
@@ -42,7 +48,12 @@
                         Selamat datang di Layanan Fogging Kami! Hubungi kami
                         hari ini untuk pembersihan rumah profesional yang memanjakan Anda.
                     </p>
-                    <button>Cari Sekarang</button>
+                    <button><?php if (logged_in()) : ?>
+                            Halo, <?= user()->username; ?>
+                        <?php else : ?>
+                            Cari Selengkapnya
+                        <?php endif; ?>
+                    </button>
                 </div>
                 <div class="image">
                     <img src="<?= base_url(); ?>/assets/landingpage/image/bg5.png" />
@@ -136,7 +147,7 @@
 
     <!-- end about -->
 
-    <!-- serives -->
+    <!-- services -->
     <div class="our-service-sass hide-pr show-pr" id="service">
         <div class="container">
             <div class="theme-title-one text-center">
@@ -144,59 +155,25 @@
             </div> <!-- /.theme-title-one -->
             <div class="inner-wrapper">
                 <div class="row">
-                    <div class="col-lg-4 single-block aos-init aos-animate" data-aos="fade-up">
-                        <div class="service-block">
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <div class="hover-content"></div>
-                            <i class="flaticon-web user"></i>
-                            <h5 class="title"><a href="#">Fogging untuk Pengendalian Nyamuk</a></h5>
-                            <p>Penawaran layanan fogging yang bertujuan untuk mengurangi populasi nyamuk di area tertentu, seperti rumah, kompleks perumahan, area perkantoran, atau area publik lainnya.</p>
-                            <a type="button" class="btn btn-primary">Pesan Sekarang</a>
-                            <a class="detail-button"><i class="icon-img"><img src="<?= base_url(); ?>/assets/landingpage/image/broom.gif" width="100%"></i></a>
-                        </div> <!-- /.service-block -->
-                    </div> <!-- /.single-block -->
-                    <div class="col-lg-4 single-block aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
-                        <div class="service-block">
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <div class="hover-content"></div>
-                            <i class="flaticon-value icon-s"></i>
-                            <h5 class="title"><a href="#">Fogging untuk Pengendalian Serangga</a></h5>
-                            <p> Layanan yang tidak hanya bertujuan untuk mengendalikan nyamuk tetapi juga serangga lainnya seperti lalat, kecoa, dan semut. Pada area tertentu bukan hanya di bagian rumah saja</p>
-                            <a type="button" class="btn btn-primary">Pesan Sekarang</a>
-                            <a href="#" class="detail-button"><i class="icon-img"><img src="<?= base_url(); ?>/assets/landingpage/image/shooting-star.gif" width="100%"></i></a>
-                        </div> <!-- /.service-block -->
-                    </div> <!-- /.single-block -->
-                    <div class="col-lg-4 single-block aos-init aos-animate" data-aos="fade-up" data-aos-delay="500">
-                        <div class="service-block">
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <span class="snow-dot"></span>
-                            <div class="hover-content"></div>
-                            <i class="flaticon-login icon-s"></i>
-                            <h5 class="title"><a href="#">Fogging untuk Pengendalian Hama</a></h5>
-                            <p> Selain serangga, layanan ini juga dapat menargetkan pengendalian hama seperti nyamuk, lalat, kecoa, tikus, dan lainnya yang menjadi masalah di area tertentu.</p>
-                            <a type="button" class="btn btn-primary">Pesan Sekarang</a>
-                            <a href="#" class="detail-button"><i class="icon-img">
-                                    <img src="<?= base_url(); ?>/assets/landingpage/image/motivation.gif" width="100%">
-                                </i></a>
-                        </div> <!-- /.service-block -->
-                    </div> <!-- /.single-block -->
+                    <?php foreach ($servis as $j) : ?>
+                        <div class="col-lg-4 single-block aos-init aos-animate" data-aos="fade-up">
+                            <div class="service-block">
+                                <span class="snow-dot"></span>
+                                <span class="snow-dot"></span>
+                                <span class="snow-dot"></span>
+                                <span class="snow-dot"></span>
+                                <span class="snow-dot"></span>
+                                <span class="snow-dot"></span>
+                                <span class="snow-dot"></span>
+                                <div class="hover-content"></div>
+                                <i class="flaticon-web user"></i>
+                                <h5 class="title"><a href="#"><?= $j['nama_layanan']; ?></a></h5>
+                                <p><?= $j['deskripsi']; ?></p>
+                                <a href="/user/getForm/<?= $j['service_id']; ?>" class="btn btn-primary">Pesan Sekarang</a>
+                                <a class="detail-button"><i class="icon-img"><img src="<?= base_url(); ?>/assets/landingpage/image/broom.gif" width="100%"></i></a>
+                            </div> <!-- /.service-block -->
+                        </div> <!-- /.single-block -->
+                    <?php endforeach; ?>
                 </div> <!-- /.row -->
             </div> <!-- /.inner-wrapper -->
         </div> <!-- /.container -->
