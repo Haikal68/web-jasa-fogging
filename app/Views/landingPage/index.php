@@ -27,7 +27,7 @@
                     <li><a href="#card1">Workers</a></li>
                     <li><a href="#service">Services</a></li>
                     <li>
-                        <a href="<?= logged_in() ? base_url() . '/logout' : base_url() . '/login'; ?>" class="text-light"><?php if (logged_in()) : ?>
+                        <a href="<?= logged_in() ? base_url() . 'logout' : base_url() . 'login'; ?>" class="text-light"><?php if (logged_in()) : ?>
                                 <ul>
                                     Logout
                                 </ul>
@@ -180,95 +180,7 @@
     </div>
     <!-- end servis -->
 
-    <!-- card section -->
-    <div class="shell" id="card1">
-        <div class="container">
-            <h2 class="mb-5">Worker Terbaik</h2>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="wsk-cp-product">
-                        <div class="wsk-cp-img">
-                            <img src="<?= base_url(); ?>/assets/landingpage/image/babu1.png" alt="Product" class="img-responsive" />
-                        </div>
-                        <div class="wsk-cp-text">
-                            <div class="category">
-                                <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-                            </div>
-                            <div class="title-product">
-                                <h3>Adrian PP</h3>
-                            </div>
-                            <div class="description-prod">
-                                <p>
-                                    Saya adalah seorang yang berkomitmen, bertanggung jawab
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="wsk-cp-product">
-                        <div class="wsk-cp-img">
-                            <img src="<?= base_url(); ?>/assets/landingpage/image/babu3.jpeg" alt="Product" class="img-responsive" />
-                        </div>
-                        <div class="wsk-cp-text">
-                            <div class="category">
-                                <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-                            </div>
-                            <div class="title-product">
-                                <h3>Agung Firmansyah</h3>
-                            </div>
-                            <div class="description-prod">
-                                <p>
-                                    Saya adalah seorang yang berdedikasi dan berpengalaman dengan tujuan utama membantu Anda dan keluarga Anda
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="wsk-cp-product">
-                        <div class="wsk-cp-img">
-                            <img src="<?= base_url(); ?>/assets/landingpage/image/babu2.png" alt="Product" class="img-responsive" />
-                        </div>
-                        <div class="wsk-cp-text">
-                            <div class="category">
-                                <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-                            </div>
-                            <div class="title-product">
-                                <h3>Aldi Kurniawan</h3>
-                            </div>
-                            <div class="description-prod">
-                                <p>
-                                    Saya adalah seorang yang berkomitmen untuk memberikan pelayanan terbaik kepada Anda dan keluarga Anda
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="wsk-cp-product">
-                        <div class="wsk-cp-img">
-                            <img src="<?= base_url(); ?>/assets/landingpage/image/babu4.jpeg" alt="Product" class="img-responsive" />
-                        </div>
-                        <div class="wsk-cp-text">
-                            <div class="category">
-                                <span></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
-                            </div>
-                            <div class="title-product">
-                                <h3>Muhammad Ikram</h3>
-                            </div>
-                            <div class="description-prod">
-                                <p>
-                                    Saya sudah jadi pembantu sejak lahir,muka saya sangat meyakinkan
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- end card section -->
+
 
     <!-- Contact Section -->
     <section class="contact text-center py-5" id="contact">

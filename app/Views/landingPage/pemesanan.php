@@ -15,7 +15,7 @@
         <form action="/user/pesan" method="POST" enctype="multipart/form-data">
             <?= csrf_field(); ?>
             <div class="container">
-                <a class="btn btn-back" href="<?php echo base_url(); ?>/">
+                <a class="btn btn-back" href="<?php echo base_url(); ?>">
                     <i class="fas fa-long-arrow-alt-left"></i>
                     Back
                 </a>

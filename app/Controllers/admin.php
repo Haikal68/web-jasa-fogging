@@ -187,11 +187,29 @@ class admin extends BaseController
     //Orders
     public function orders(): string
     {
-
         $data = [
             'title' => 'Data Orders',
-            'orders' => $this->OrdersModel->getOrders()
+            'orders' => $this->OrdersModel->getOrders(),
         ];
         return view('admin/orders', $data);
+    }
+
+    public function detailorder($order_id): string
+    {
+        $data = [
+            'title' => 'Data Orders',
+            'orders' => $this->OrdersModel->getDetailOrders($order_id),
+        ];
+        return view('admin/orderDetail', $data);
+    }
+
+    public function konfirmasiOrder()
+    {
+        $data = [
+            'status_order' => "dikonfirmasi",
+        ];
+        $this->OrdersModel->konfirmasiOrder($data);
+        session()->setFlashdata('pesan', 'data berhasil dikonfirmasi.');
+        return redirect()->to('/admin/orders');
     }
 }

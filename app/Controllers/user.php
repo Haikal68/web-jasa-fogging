@@ -11,7 +11,6 @@ use CodeIgniter\I18n\Time;
 class user extends BaseController
 {
 
-
     protected $ServicesModel;
     protected $OrdersModel;
     protected $UsersModel;
@@ -54,6 +53,7 @@ class user extends BaseController
 
     public function getForm($service_id): string
     {
+
         $data = [
             'title' => 'FoggingKu',
             'servis' => $this->ServicesModel->getservices(),
@@ -66,7 +66,6 @@ class user extends BaseController
     {
 
         $gambar = $this->request->getFile('bukti_pembayaran');
-
         $gambar->move('img');
 
         $namaGambar = $gambar->getName();

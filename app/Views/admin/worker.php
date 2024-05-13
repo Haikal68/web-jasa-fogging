@@ -35,7 +35,7 @@
                                             <th>Tanggal Layanan</th>
                                             <th>Alamat</th>
                                             <th>Layanan</th>
-                                            <th>Total Harga</th>
+                                            <th>No Telepon</th>
                                             <th>Status Order</th>
                                             <th>Action</th>
                                         </tr>
@@ -53,12 +53,13 @@
                                                 <td><?= $j['tanggal_layanan']; ?></td>
                                                 <td><?= $j['alamat_layanan']; ?></td>
                                                 <td><?= $j['nama_layanan']; ?></td>
-                                                <td>Rp <?= number_format($j['total_harga'], 0, ',', '.') ?></td>
+                                                <td><?= $j['no_telp']; ?></td>
+
                                                 <td class="<?php if ($j['status_order'] == 'dikonfirmasi') echo 'text-success';
                                                             elseif ($j['status_order'] == 'pending') echo 'text-danger';
                                                             else echo 'text-warning' ?>"><?= $j['status_order']; ?></td>
                                                 <td class="text-center">
-                                                    <a href="/admin/detailorder/<?= $j['order_id']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Konfirmasi"><i class="far fa-eye "></i>Lihat</button></a>
+                                                    <a href="/worker/prosesOrder"><button class=" btn btn-primary btn-sm rounded-3" title="Proses"><i class="far fa-sun"></i>Proses</button></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

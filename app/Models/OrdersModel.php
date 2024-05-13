@@ -12,7 +12,14 @@ class OrdersModel extends Model
 
     public function getOrders()
     {
-        return $this->db->table('orders')->get()->getResultArray();
+        return $this->db->table('orders')
+            ->join('services', 'services.service_id = orders.service_id')->get()->getResultArray();
+    }
+
+    public function getkonfirOrder()
+    {
+        return $this->db->table('orders')
+            ->join('services', 'services.service_id = orders.service_id')->where('status_order', 'dikonfirmasi')->get()->getResultArray();
     }
 
     public function getDetailOrders($order_id)
@@ -23,5 +30,15 @@ class OrdersModel extends Model
     public function addPesan($data)
     {
         return $this->db->table('orders')->insert($data);
+    }
+
+    public function konfirmasiOrder($data)
+    {
+        return $this->db->table('orders')->update($data);
+    }
+
+    public function prosesOrder($data)
+    {
+        return $this->db->table('orders')->update($data);
     }
 }
