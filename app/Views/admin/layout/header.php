@@ -34,7 +34,7 @@
       </div>
       <ul class="sidebar-menu">
         <li><a class="nav-link" href="<?= base_url(); ?>admin"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
-        <?php if (in_groups('admin', 'manager')) : ?>
+        <?php if (in_groups('admin') || in_groups('manager')) : ?>
           <li class="menu-header">MASTER DATA</li>
           <li><a class="nav-link" href="/admin/orders"><i class="fas fa-university"></i> <span>Data Pemesanan</span></a></li>
 

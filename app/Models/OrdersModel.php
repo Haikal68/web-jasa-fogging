@@ -41,4 +41,16 @@ class OrdersModel extends Model
     {
         return $this->db->table('orders')->update($data);
     }
+
+    public function getOrderByToken($order_id)
+    {
+        return $this->db->table('orders')->where('order_id', $order_id)->get()->getRowArray();
+    }
+
+    public function updateOrder($order)
+    {
+        return $this->db->table('orders')
+            ->where('order_id', $order['order_id'])
+            ->update(['status_order' => $order['status_order']]);
+    }
 }

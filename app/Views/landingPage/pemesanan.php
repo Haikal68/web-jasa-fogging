@@ -7,12 +7,15 @@
     <title>Pemesanan</title>
     <link rel="stylesheet" href="<?= base_url(); ?>/assets/landingpage/Formstyle.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-6weElHe6qmZORitZ"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
+
 
 <body>
 
     <div class="main">
-        <form action="/user/pesan" method="POST" enctype="multipart/form-data">
+        <form action="/user/pesan" method="POST" enctype="multipart/form-data" id="payment-form">
             <?= csrf_field(); ?>
             <div class="container">
                 <a class="btn btn-back" href="<?php echo base_url(); ?>">
@@ -30,7 +33,7 @@
                     <h1>Pemesanan</h1>
 
                 </div>
-
+                <input type="hidden" id="order_id" name="order_id" value="<?= $order_id; ?>" />
                 <label for="nama_customer">Nama</label>
                 <input type="text" id="nama_customer" name="nama_customer" placeholder="Nama" />
                 <br>
@@ -43,20 +46,75 @@
                 <label for="alamat_layanan">Alamat </label>
                 <input type="text" id="alamat_layanan" name="alamat_layanan" placeholder="Alamat" />
                 <br>
-                <label class="text-muted" for="alamat_layanan">Lakukan Pembayaran Ke BRI Dengan Total Seperti Dibawah </label>
+
                 <input type="text" id="total_harga" name="total_harga" placeholder="total_harga" value="<?= $detail['harga']; ?>" readonly />
-                <label class="text-muted" for="alamat_layanan">No VA 3529 0100 8283 504 </label>
+
                 <br>
-                <label for="bukti_pembayaran">Bukti Pembayaran </label>
-                <input type="file" id="bukti_pembayaran" name="bukti_pembayaran" placeholder="Bukti Pembayaran" required />
                 <input type="hidden" id="service_id" name="service_id" placeholder="service_id" value="<?= $detail['service_id']; ?>" readonly />
 
 
-                <button class="btn" id="submit">Confirm And Pay</button>
+                <button class="btn pay-button" id="submit">Confirm And Pay</button>
 
             </div>
         </form>
+
     </div>
+    <script type="text/javascript">
+        $('#submit').click(function(event) {
+            event.preventDefault();
+            $(this).attr("disabled", "disabled");
+
+            var nama_customer = $("#nama_customer").val();
+            var no_telp = $("#no_telp").val();
+            var tanggal_layanan = $("#tanggal_layanan").val();
+            var alamat_layanan = $("#alamat_layanan").val();
+            var total_harga = $("#total_harga").val();
+            var service_id = $("#service_id").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '<?= base_url('user/pesan'); ?>',
+                data: {
+                    nama_customer: nama_customer,
+                    no_telp: no_telp,
+                    tanggal_layanan: tanggal_layanan,
+                    alamat_layanan: alamat_layanan,
+                    total_harga: total_harga,
+                    service_id: service_id
+                },
+                cache: false,
+                success: function(data) {
+                    console.log('token = ' + data);
+
+                    // Parsing JSON data untuk mendapatkan token
+                    var jsonData = JSON.parse(data);
+                    var snapToken = jsonData; // Snap Token langsung dari server
+
+                    // Tambahkan token pembayaran ke fungsi window.snap.pay()
+                    snap.pay(snapToken, {
+                        onSuccess: function(result) {
+                            console.log(result);
+                            send_response_to_form(result);
+                            window.location.href = '<?= base_url(); ?>/user/success';
+                        },
+                        onPending: function(result) {
+                            console.log(result);
+                            send_response_to_form(result);
+                        },
+                        onError: function(result) {
+                            console.log(result);
+                            send_response_to_form(result);
+                        }
+                    });
+                }
+            });
+        });
+
+        function send_response_to_form(result) {
+            document.getElementById('payment-form').dispatchEvent(new Event('submit'))
+        }
+    </script>
+
 
 </body>
 

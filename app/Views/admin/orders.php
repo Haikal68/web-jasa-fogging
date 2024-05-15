@@ -54,9 +54,9 @@
                                                 <td><?= $j['alamat_layanan']; ?></td>
                                                 <td><?= $j['nama_layanan']; ?></td>
                                                 <td>Rp <?= number_format($j['total_harga'], 0, ',', '.') ?></td>
-                                                <td class="<?php if ($j['status_order'] == 'dikonfirmasi') echo 'text-success';
-                                                            elseif ($j['status_order'] == 'pending') echo 'text-danger';
-                                                            else echo 'text-warning' ?>"><?= $j['status_order']; ?></td>
+                                                <td><span class=" badge <?php if ($j['status_order'] == 'dikonfirmasi') echo 'badge-success';
+                                                                        elseif ($j['status_order'] == 'pending') echo 'badge-danger';
+                                                                        else echo 'badge-warning' ?>"><?= $j['status_order']; ?></span></td>
                                                 <td class="text-center">
                                                     <a href="/admin/detailorder/<?= $j['order_id']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Konfirmasi"><i class="far fa-eye "></i>Lihat</button></a>
                                                 </td>

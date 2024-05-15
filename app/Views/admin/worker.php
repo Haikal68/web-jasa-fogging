@@ -55,9 +55,9 @@
                                                 <td><?= $j['nama_layanan']; ?></td>
                                                 <td><?= $j['no_telp']; ?></td>
 
-                                                <td class="<?php if ($j['status_order'] == 'dikonfirmasi') echo 'text-success';
-                                                            elseif ($j['status_order'] == 'pending') echo 'text-danger';
-                                                            else echo 'text-warning' ?>"><?= $j['status_order']; ?></td>
+                                                <td><span class=" badge <?php if ($j['status_order'] == 'dikonfirmasi') echo 'badge-success';
+                                                                        elseif ($j['status_order'] == 'pending') echo 'badge-danger';
+                                                                        else echo 'badge-warning' ?>"><?= $j['status_order']; ?></span></td>
                                                 <td class="text-center">
                                                     <a href="/worker/prosesOrder"><button class=" btn btn-primary btn-sm rounded-3" title="Proses"><i class="far fa-sun"></i>Proses</button></a>
                                                 </td>

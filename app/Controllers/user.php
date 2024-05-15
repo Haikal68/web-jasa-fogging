@@ -6,6 +6,9 @@ use App\Models\ServicesModel;
 use App\Models\OrdersModel;
 use App\Models\UsersModel;
 use CodeIgniter\I18n\Time;
+use Midtrans\Config;
+use Midtrans\Snap;
+use Midtrans\Notification;
 
 
 class user extends BaseController
@@ -35,14 +38,6 @@ class user extends BaseController
         return view('landingPage/index', $data);
     }
 
-    public function pemesanan(): string
-    {
-        $data = [
-            'title' => 'FoggingKu',
-            'servis' => $this->ServicesModel->getservices()
-        ];
-        return view('landingPage/pemesanan.php', $data);
-    }
     public function success(): string
     {
         $data = [
@@ -53,7 +48,6 @@ class user extends BaseController
 
     public function getForm($service_id): string
     {
-
         $data = [
             'title' => 'FoggingKu',
             'servis' => $this->ServicesModel->getservices(),
@@ -64,11 +58,26 @@ class user extends BaseController
 
     public function pesan()
     {
+        // Konfigurasi Midtrans
+        Config::$serverKey = 'SB-Mid-server-c7_g2tKMOOlkKG-rm3C8FB7W';
+        Config::$isProduction = false; // Ganti menjadi true untuk production
 
-        $gambar = $this->request->getFile('bukti_pembayaran');
-        $gambar->move('img');
+        // Buat transaksi Midtrans
+        $params = [
+            'transaction_details' => [
+                'order_id' => uniqid(), // Generate order ID unik
+                'gross_amount' => $this->request->getVar('total_harga'),
+            ],
+            'customer_details' => [
+                'first_name' => $this->request->getVar('nama_customer'),
+                'shipping_address' => $this->request->getVar('alamat_layanan'),
+                'phone' => $this->request->getVar('no_telp'),
+            ],
+        ];
 
-        $namaGambar = $gambar->getName();
+        $snapToken = Snap::getSnapToken($params);
+
+        // Simpan data pemesanan sementara
         $data = [
             'nama_customer' => $this->request->getVar('nama_customer'),
             'no_telp' => $this->request->getVar('no_telp'),
@@ -76,11 +85,41 @@ class user extends BaseController
             'alamat_layanan' => $this->request->getVar('alamat_layanan'),
             'service_id' => $this->request->getVar('service_id'),
             'tanggal_pemesanan' => Time::now(),
-            'bukti_pembayaran' => $namaGambar,
             'total_harga' => $this->request->getVar('total_harga'),
+            'token' => $snapToken, // Simpan token Midtrans
         ];
+
         $this->OrdersModel->addPesan($data);
-        session()->setFlashdata('pesan', 'Order berhasil ditambahkan.');
-        return redirect()->to('/user/success');
+        echo json_encode($snapToken);
+        exit;
+    }
+
+    public function notifikasi()
+    {
+        // Konfigurasi Midtrans
+        Config::$serverKey = 'SB-Mid-server-c7_g2tKMOOlkKG-rm3C8FB7W';
+        Config::$isProduction = false; // Ganti menjadi true untuk production
+
+        // Notifikasi dari Midtrans
+        $notif = new Notification();
+
+        $status = $notif->transaction_status;
+        $order_id = $notif->order_id;
+        if ($status == 'capture') {
+            // Pembayaran berhasil, simpan data pesanan ke database
+            $order = $this->OrdersModel->getOrderByToken($order_id);
+            $order['status_order'] = 'paid';
+            $this->OrdersModel->updateOrder($order);
+        } else if ($status == 'settlement') {
+            // Pembayaran berhasil dan diselesaikan
+        } else if ($status == 'pending') {
+            // Pembayaran sedang diproses
+        } else if ($status == 'deny') {
+            // Pembayaran ditolak
+        } else if ($status == 'expire') {
+            // Pembayaran kadaluarsa
+        } else if ($status == 'cancel') {
+            // Pembayaran dibatalkan
+        }
     }
 }
