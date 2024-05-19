@@ -4,13 +4,13 @@
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Data Users</h1>
+            <h1>Data Worker</h1>
         </div>
 
         <div class="section-body">
             <a class="btn btn-primary" style="margin-bottom:20px" href="<?php echo base_url(); ?>/admin/tambah_user">
                 <i class=" fas fa-plus"></i>
-                Tambah Users
+                Tambah Worker
             </a>
             <!-- <?php if (session()->getFlashdata('pesan')) : ?>
                 <div class="alert alert-success" role="alert">
@@ -23,14 +23,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Data Users</h4>
+                            <h4>Data Worker</h4>
                         </div>
-                        <div class="col-4">
-                            <a class="btn btn-primary" style="margin-bottom:20px" href="<?php echo base_url(); ?>/admin/printUser">
-                                <i class=" fas fa-print"></i>
-                                Print Data
-                            </a>
-                        </div>
+
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped" id="table-1">
@@ -48,7 +43,7 @@
                                     </thead>
                                     <tbody>
                                         <?php $i = 1; ?>
-                                        <?php foreach ($user as $j) : ?>
+                                        <?php foreach ($worker as $j) : ?>
 
                                             <tr>
                                                 <td>
@@ -59,8 +54,8 @@
                                                 <td><?= $j['username']; ?></td>
                                                 <td><?= $j['name']; ?></td>
                                                 <td class="text-center">
-                                                    <a href="/admin/resetpass/<?= $j['user_id']; ?>"><button class=" btn btn-warning btn-sm rounded-3" title="Edit"><i class="fas fa-key "></i>Reset Password</button></a>
-                                                    <a class="btn-hapus" href="/admin/deleteuser/<?= $j['user_id']; ?>"><button class=" btn btn-danger btn-sm rounded-3" title="Delete"><i class="fas fa-trash "></i></button></a>
+                                                    <a href="/admin/resetpass/<?= $j['user_id']; ?>"><button class=" btn btn-warning btn-sm rounded-3" title="Reset"><i class="fas fa-key "></i>Reset Password</button></a>
+                                                    <a href="/admin/detailUser/<?= $j['user_id']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Detail"><i class="fas fa-eye "></i>Detail</button></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

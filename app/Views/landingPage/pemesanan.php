@@ -33,7 +33,9 @@
                     <h1>Pemesanan</h1>
 
                 </div>
-                <input type="hidden" id="order_id" name="order_id" value="<?= $order_id; ?>" />
+                <?php if (logged_in()) : ?>
+                    <input type="hidden" id="users_id" name="users_id" placeholder="Nama" readonly value="<?= user()->id; ?>" />
+                <?php endif; ?>
                 <label for="nama_customer">Nama</label>
                 <input type="text" id="nama_customer" name="nama_customer" placeholder="Nama" />
                 <br>
@@ -64,6 +66,7 @@
             event.preventDefault();
             $(this).attr("disabled", "disabled");
 
+            var users_id = $("#users_id").val();
             var nama_customer = $("#nama_customer").val();
             var no_telp = $("#no_telp").val();
             var tanggal_layanan = $("#tanggal_layanan").val();
@@ -75,6 +78,7 @@
                 type: 'POST',
                 url: '<?= base_url('user/pesan'); ?>',
                 data: {
+                    users_id: users_id,
                     nama_customer: nama_customer,
                     no_telp: no_telp,
                     tanggal_layanan: tanggal_layanan,
@@ -93,9 +97,23 @@
                     // Tambahkan token pembayaran ke fungsi window.snap.pay()
                     snap.pay(snapToken, {
                         onSuccess: function(result) {
-                            console.log(result);
-                            send_response_to_form(result);
-                            window.location.href = '<?= base_url(); ?>/user/success';
+                            let order_id = result.order_id;
+                            let status_order = "paid";
+
+                            $.ajax({
+                                url: "<?= base_url('user/updateOrder'); ?>",
+                                type: "POST",
+                                data: {
+                                    order_id: order_id,
+                                    status_order: status_order
+                                },
+                                success: function(response) {
+                                    location.href = "<?= base_url(); ?>";
+                                },
+                                error: function() {
+                                    console.log('Failed to update order status.');
+                                },
+                            });
                         },
                         onPending: function(result) {
                             console.log(result);
@@ -114,7 +132,6 @@
             document.getElementById('payment-form').dispatchEvent(new Event('submit'))
         }
     </script>
-
 
 </body>
 

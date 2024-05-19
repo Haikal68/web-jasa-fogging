@@ -28,8 +28,16 @@
                             </div>
                             <div class="form-group">
                                 <label for="username"><?= lang('Auth.username') ?></label>
-                                <input id="username" type="text" class="form-control <?php if (session('errors.username')) : ?>is-invalid<?php endif ?>" name=" username" placeholder="<?= lang('Auth.username') ?>" value="<?= old('username') ?>">
+                                <input id="username" type="text" class="form-control <?php if (session('errors.username')) : ?>is-invalid<?php endif ?>" name="username" placeholder="<?= lang('Auth.username') ?>" value="<?= old('username') ?>">
                                 <div class="invalid-feedback">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fullname">Nama Lengkap</label>
+                                <input type="text" class="form-control <?php if (session('errors.fullname')) : ?>is-invalid<?php endif ?>" name="fullname" placeholder="Nama Lengkap" value="<?= old('fullname') ?>">
+                                <div class="invalid-feedback">
+                                    <?= session('errors.fullname') ?>
                                 </div>
                             </div>
 

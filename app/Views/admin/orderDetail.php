@@ -26,7 +26,6 @@
                             <h5 class="card-title">Detail Pemesanan</h5>
                             <hr>
                             <div class="mb-3">
-                                <img src="/img/<?= $orders['bukti_pembayaran']; ?>" class="p-1 bg-primary mb-3" width="500">
                                 <div class="row mb-2">
                                     <div class="col-sm-3">
                                         <strong>Nama Customer:</strong>
@@ -69,10 +68,10 @@
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-sm-3">
-                                        <strong>Servis:</strong>
+                                        <strong>Servis </strong>
                                     </div>
                                     <div class="col-sm-9">
-                                        <?= $orders['service_id']; ?>
+                                        <?= $orders['nama_layanan']; ?>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
@@ -80,7 +79,7 @@
                                         <strong>Total Harga:</strong>
                                     </div>
                                     <div class="col-sm-9">
-                                        <?= $orders['total_harga']; ?>
+                                        Rp <?= number_format($orders['total_harga'], 0, ',', '.') ?>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
@@ -88,26 +87,21 @@
                                         <strong>Status Order:</strong>
                                     </div>
                                     <div class="col-sm-9">
-                                        <?= $orders['status_order']; ?>
+                                        <span class=" badge <?php if ($orders['status_order'] == 'dikonfirmasi') echo 'badge-success';
+                                                            elseif ($orders['status_order'] == 'pending') echo 'badge-danger';
+                                                            else echo 'badge-warning' ?>"><?= $orders['status_order']; ?></span>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-sm-3">
-                                        <strong>Technician ID:</strong>
+                                        <strong>Worker Yang Mengerjakan:</strong>
                                     </div>
                                     <div class="col-sm-9">
-                                        <?= $orders['teknisi_id']; ?>
+                                        <?= $orders['fullname']; ?>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
-                                    <div class="col-sm-9">
 
-                                    </div>
-                                    <div class="col-sm-3 text-right">
-                                        <a href="/admin/konfirmasiOrder/<?= $orders['order_id']; ?>">
-                                            <button class=" btn btn-primary rounded-3" title="Edit" <?php if ($orders['status_order'] == 'dikonfirmasi' || $orders['status_order'] == 'diproses') echo 'disabled'; ?>>Konfirmasi</button>
-                                        </a>
-                                    </div>
                                 </div>
                             </div>
                         </div>

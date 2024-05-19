@@ -30,21 +30,44 @@ class worker extends BaseController
     {
         $data = [
             'title' => 'Dashboard Worker',
+            'orders' => $this->OrdersModel->getOrderDiambil(),
+            'pesanan' => $this->OrdersModel->getOrderPaid()
+
+
+        ];
+        return view('admin/dashboard_worker', $data);
+    }
+
+    public function order(): string
+    {
+        $data = [
+            'title' => 'Dashboard Worker',
             'orders' => $this->OrdersModel->getkonfirOrder(),
 
         ];
         return view('admin/worker', $data);
     }
 
-    public function prosesOrder()
+    public function prosesOrder($order_id)
     {
         $data = [
             'status_order' => "diproses",
             'teknisi_id' => user()->id,
 
         ];
-        $this->OrdersModel->prosesOrder($data);
-        session()->setFlashdata('pesan', 'data berhasil diambil.');
-        return redirect()->to('/worker');
+        $this->OrdersModel->prosesOrder($data, $order_id);
+        session()->setFlashdata('pesan', 'Pesanan berhasil diambil.');
+        return redirect()->to('/worker/orderan');
+    }
+
+    public function selesaiOrder($order_id)
+    {
+        $data = [
+            'status_order' => "selesai",
+
+        ];
+        $this->OrdersModel->prosesOrder($data, $order_id);
+        session()->setFlashdata('pesan', 'Pesanan berhasil Diselesaikan.');
+        return redirect()->to('/worker/orderan');
     }
 }

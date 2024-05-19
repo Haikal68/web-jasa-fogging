@@ -33,13 +33,18 @@
         <a href="/home/dashboard">FG</a>
       </div>
       <ul class="sidebar-menu">
-        <li><a class="nav-link" href="<?= base_url(); ?>admin"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+        <?php if (in_groups('admin') || in_groups('manager')) : ?>
+          <li><a class="nav-link" href="<?= base_url(); ?>admin"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+        <?php endif; ?>
+        <?php if (in_groups('worker')) : ?>
+          <li><a class="nav-link" href="<?= base_url(); ?>worker"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+        <?php endif; ?>
+
         <?php if (in_groups('admin') || in_groups('manager')) : ?>
           <li class="menu-header">MASTER DATA</li>
           <li><a class="nav-link" href="/admin/orders"><i class="fas fa-university"></i> <span>Data Pemesanan</span></a></li>
-
           <li><a class="nav-link" href="/admin/services"><i class="fas fa-university"></i> <span>Data Layanan</span></a></li>
-
+          <li><a class="nav-link" href="/admin/workers"><i class="fas fa-university"></i> <span>Data Worker</span></a></li>
         <?php endif; ?>
 
         <?php if (in_groups('manager')) : ?>
@@ -47,22 +52,10 @@
           <li><a class="nav-link" href="/admin/users"><i class="fas fa-university"></i> <span>Data User</span></a></li>
         <?php endif; ?>
 
-        <?php if (in_groups('manager')) : ?>
+        <?php if (in_groups('worker')) : ?>
           <li class="menu-header">Worker</li>
-          <li><a class="nav-link" href="/worker"><i class="fas fa-university"></i> <span>Orderan</span></a></li>
+          <li><a class="nav-link" href="/worker/orderan"><i class="fas fa-university"></i> <span>Orderan</span></a></li>
         <?php endif; ?>
-
-        <?php if (in_groups('manager')) : ?>
-          <li class="menu-header">Pemesanan</li>
-          <li class="dropdown">
-            <a href="#" class="nav-link has-dropdown"><i class="fas fa-bicycle"></i> <span>Report Data</span></a>
-            <ul class="dropdown-menu">
-              <li><a class="nav-link" href="blank.html"></i> <span>Laporan Penjualan</span></a></li>
-              <li><a class="nav-link" href="blank.html"> <span>Laporan Pendapatan</span></a></li>
-            </ul>
-          </li>
-        <?php endif; ?>
-
       </ul>
 
       <div class="mt-4 mb-4 p-3 hide-sidebar-mini">

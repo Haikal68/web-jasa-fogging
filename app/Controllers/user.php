@@ -10,10 +10,8 @@ use Midtrans\Config;
 use Midtrans\Snap;
 use Midtrans\Notification;
 
-
-class user extends BaseController
+class User extends BaseController
 {
-
     protected $ServicesModel;
     protected $OrdersModel;
     protected $UsersModel;
@@ -21,14 +19,10 @@ class user extends BaseController
     public function __construct()
     {
         $this->UsersModel = new UsersModel();
-
         $this->ServicesModel = new ServicesModel();
-
         $this->OrdersModel = new OrdersModel();
-
-        // helper('date');
-        // helper('time');
     }
+
     public function index(): string
     {
         $data = [
@@ -65,7 +59,7 @@ class user extends BaseController
         // Buat transaksi Midtrans
         $params = [
             'transaction_details' => [
-                'order_id' => uniqid(), // Generate order ID unik
+                'order_id' => mt_rand(), // Generate order ID unik
                 'gross_amount' => $this->request->getVar('total_harga'),
             ],
             'customer_details' => [
@@ -79,6 +73,8 @@ class user extends BaseController
 
         // Simpan data pemesanan sementara
         $data = [
+            'order_id' => $params['transaction_details']['order_id'], // Save the order_id generated
+            'users_id' => $this->request->getVar('users_id'),
             'nama_customer' => $this->request->getVar('nama_customer'),
             'no_telp' => $this->request->getVar('no_telp'),
             'tanggal_layanan' => $this->request->getVar('tanggal_layanan'),
@@ -94,6 +90,15 @@ class user extends BaseController
         exit;
     }
 
+    public function updateOrder()
+    {
+        $order_id = $this->request->getVar('order_id');
+        $status_order = $this->request->getVar('status_order');
+
+        $this->OrdersModel->updateOrderStatus($order_id, $status_order);
+        session()->setFlashdata('pesan', 'data berhasil diupdate.');
+    }
+
     public function notifikasi()
     {
         // Konfigurasi Midtrans
@@ -105,13 +110,9 @@ class user extends BaseController
 
         $status = $notif->transaction_status;
         $order_id = $notif->order_id;
-        if ($status == 'capture') {
-            // Pembayaran berhasil, simpan data pesanan ke database
-            $order = $this->OrdersModel->getOrderByToken($order_id);
-            $order['status_order'] = 'paid';
-            $this->OrdersModel->updateOrder($order);
-        } else if ($status == 'settlement') {
-            // Pembayaran berhasil dan diselesaikan
+        if ($status == 'capture' || $status == 'settlement') {
+            // Pembayaran berhasil
+            $this->OrdersModel->updateOrderStatus($order_id, 'paid');
         } else if ($status == 'pending') {
             // Pembayaran sedang diproses
         } else if ($status == 'deny') {

@@ -46,7 +46,9 @@
                                 <div class="form-group">
                                     <label for="role">Role</label>
                                     <select class="form-control" id="role" name="role">
-                                        <option value="admin">admin</option>
+                                        <?php if (in_groups('manager')) : ?>
+                                            <option value="admin">admin</option>
+                                        <?php endif; ?>
                                         <option value="worker">worker</option>
                                     </select>
                                 </div>

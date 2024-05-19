@@ -4,9 +4,10 @@ namespace App\Controllers;
 
 use Myth\Auth\Models\UserModel;
 use Myth\Auth\Password;
+use CodeIgniter\Controller;
 use App\Models\UsersModel;
 use App\Models\OrdersModel;
-
+use TCPDF;
 use App\Models\ServicesModel;
 use PhpParser\Node\Stmt\Echo_;
 
@@ -29,7 +30,11 @@ class admin extends BaseController
     public function index(): string
     {
         $data = [
-            'title' => 'Dashboard Admin'
+            'title' => 'Dashboard Admin',
+            'pendapatan' => $this->OrdersModel->getTotalPendapatan(),
+            'pemesanan' => $this->OrdersModel->getTotalPemesanan(),
+            'akun' => $this->UsersModel->getTotalCustomer(),
+
         ];
         return view('admin/dashboard', $data);
     }
@@ -81,7 +86,7 @@ class admin extends BaseController
             'active' => 1
         ]);
         session()->setFlashdata('pesan', 'User berhasil ditambahkan.');
-        return redirect()->to('/admin/users');
+        return redirect()->to('/admin/workers');
     }
 
     public function resetpass($id)
@@ -102,6 +107,27 @@ class admin extends BaseController
         $this->UsersModel->deleteuser($user_id);
         session()->setFlashdata('pesan', 'data berhasil dihapus.');
         return redirect()->to('/admin/users');
+    }
+
+    public function workers(): string
+    {
+        // $Mahasiswa = $this->UsersModel->findAll();
+
+        $data = [
+            'title' => 'Data Workers    ',
+            'worker' => $this->UsersModel->getWorker()
+        ];
+        return view('admin/workers', $data);
+    }
+
+    public function detailUser($user_id): string
+    {
+        $data = [
+            'title' => 'Data Orders',
+            'worker' => $this->UsersModel->getDetailUser($user_id),
+        ];
+
+        return view('admin/users/detail_user', $data);
     }
 
 
@@ -192,6 +218,42 @@ class admin extends BaseController
             'orders' => $this->OrdersModel->getOrders(),
         ];
         return view('admin/orders', $data);
+    }
+
+    public function filterOrders()
+    {
+        $tglAwal = $this->request->getPost('tglAwal');
+        $tglAkhir = $this->request->getPost('tglAkhir');
+
+        $orderModel = new OrdersModel();
+        $orders = $orderModel->where('tanggal_layanan >=', $tglAwal)
+            ->join('services', 'services.service_id = orders.service_id')
+            ->where('tanggal_layanan <=', $tglAkhir)->whereIn('status_order', ['paid', 'diproses', 'selesai'])
+            ->findAll();
+        $dompdf = new \Dompdf\Dompdf();
+        $dompdf->loadhtml(view('admin/print/printOrder', [
+            'orders' => $orders,
+            'order' => $this->OrdersModel->getTotalPendapatan(),
+            'tglAwal' => $tglAwal,
+            'tglAkhir' => $tglAkhir
+        ]));
+
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream();
+    }
+
+    public function printUser()
+    {
+
+        $dompdf = new \Dompdf\Dompdf();
+        $dompdf->loadhtml(view('admin/print/printUser', [
+            'users' => $this->UsersModel->getAdmin(),
+        ]));
+
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+        $dompdf->stream('Laporan Data Pegawai.pdf');
     }
 
     public function detailorder($order_id): string

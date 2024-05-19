@@ -57,9 +57,16 @@
 
                                                 <td><span class=" badge <?php if ($j['status_order'] == 'dikonfirmasi') echo 'badge-success';
                                                                         elseif ($j['status_order'] == 'pending') echo 'badge-danger';
+                                                                        elseif ($j['status_order'] == 'selesai') echo 'badge-info';
                                                                         else echo 'badge-warning' ?>"><?= $j['status_order']; ?></span></td>
                                                 <td class="text-center">
-                                                    <a href="/worker/prosesOrder"><button class=" btn btn-primary btn-sm rounded-3" title="Proses"><i class="far fa-sun"></i>Proses</button></a>
+                                                    <?php if ($j['status_order'] == 'paid') : ?>
+                                                        <a href="/worker/prosesOrder/<?= $j['order_id']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Proses"><i class="far fa-sun"></i>Proses</button></a>
+                                                    <?php elseif ($j['status_order'] == 'selesai') : ?>
+                                                        <a href="/worker/prosesOrder"><button class=" btn btn-primary btn-sm rounded-3" title="Proses" disabled><i class="far fa-sun"></i>Selesai</button></a>
+                                                    <?php else : ?>
+                                                        <a href="/worker/selesaiOrder/<?= $j['order_id']; ?>"><button class=" btn btn-primary btn-sm rounded-3" title="Proses"><i class="far fa-sun"></i>Selesai</button></a>
+                                                    <?php endif; ?>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

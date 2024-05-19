@@ -17,6 +17,33 @@ class UsersModel extends Model
             ->join('auth_groups g', 'g.id = gs.group_id')
             ->get()->getResultArray();
     }
+    public function getAdmin()
+    {
+        return $this->db->table('users')
+            ->join('auth_groups_users gs', 'users.id = gs.user_id')
+            ->join('auth_groups g', 'g.id = gs.group_id')
+            ->where('g.id', 4)->orWhere('g.id', 1)
+            ->get()->getResultArray();
+    }
+    public function getWorker()
+    {
+        return $this->db->table('users')
+            ->join('auth_groups_users gs', 'users.id = gs.user_id')
+            ->join('auth_groups g', 'g.id = gs.group_id')->where('g.id', 4)->get()->getResultArray();
+    }
+    public function getTotalCustomer()
+    {
+        return $this->db->table('users')
+            ->join('auth_groups_users gs', 'users.id = gs.user_id')
+            ->join('auth_groups g', 'g.id = gs.group_id')->where('g.id', 2)->countAllResults();
+    }
+
+    public function getDetailUser($user_id)
+    {
+        return $this->db->table('users')
+            ->join('auth_groups_users gs', 'users.id = gs.user_id')
+            ->join('auth_groups g', 'g.id = gs.group_id')->where('users.id', $user_id)->get()->getRowArray();
+    }
 
     public function getGroup()
     {
