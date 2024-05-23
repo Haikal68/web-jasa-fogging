@@ -185,11 +185,11 @@
 
                 <tr>
                     <td colspan="4">SUBTOTAL</td>
-                    <td class="total">Rp <?= number_format($order, 0, ',', '.') ?></td>
+                    <td class="total">Rp <?= number_format($pendapatan->total_harga, 0, ',', '.') ?></td>
                 </tr>
                 <tr>
                     <td colspan="4" class="grand total">GRAND TOTAL</td>
-                    <td class="grand total">Rp <?= number_format($order, 0, ',', '.') ?></td>
+                    <td class="grand total">Rp <?= number_format($pendapatan->total_harga, 0, ',', '.') ?></td>
                 </tr>
             </tbody>
         </table>

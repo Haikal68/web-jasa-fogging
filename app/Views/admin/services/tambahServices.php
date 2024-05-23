@@ -8,7 +8,7 @@
         </div>
 
         <div class="section-body">
-            <a class="btn btn-danger" style="margin-bottom:20px" href="<?php echo base_url(); ?>/admin/services">
+            <a class="btn btn-danger" style="margin-bottom:20px" href="<?php echo base_url(); ?>admin/services">
                 <i class="fas fa-long-arrow-alt-left"></i>
                 Kembali
             </a>

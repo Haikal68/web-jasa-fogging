@@ -8,7 +8,7 @@
         </div>
 
         <div class="section-body">
-            <a class="btn btn-primary" style="margin-bottom:20px" href="<?php echo base_url(); ?>/admin/tambahServices">
+            <a class="btn btn-primary" style="margin-bottom:20px" href="<?php echo base_url(); ?>admin/tambahServices">
                 <i class=" fas fa-plus"></i>
                 Tambah Services
             </a>

@@ -20,25 +20,26 @@
                             <div class="card-header">
                                 <h4>Form User</h4>
                             </div>
+                            <?= validation_list_errors() ?>
 
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="fullname">Nama User</label>
-                                    <input type="text" class="form-control" name="fullname" id="fullname" required="" autofocus>
-                                    <div id="fullname" class="invalid-feedback">
+                                    <input type="text" class="form-control <?= ($validation->hasError('fullname') ? 'is-invalid' : ''); ?>" name="fullname" id="fullname" value="<?= old('fullname'); ?>" autofocus>
+                                    <div id=" fullname" class="invalid-feedback">
                                         <?= $validation->getError('fullname'); ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="text" class="form-control" name="email" id="email" required="">
-                                    <div id="email" class="invalid-feedback">
+                                    <input type="text" class="form-control <?= ($validation->hasError('email') ? 'is-invalid' : ''); ?>" name="email" id="email" value="<?= old('email'); ?>">
+                                    <div id=" email" class="invalid-feedback">
                                         <?= $validation->getError('email'); ?>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="username">Username</label>
-                                    <input type="text" class="form-control" name="username" id="username" required="">
+                                    <input type="text" class="form-control <?= ($validation->hasError('username') ? 'is-invalid' : ''); ?>" name="username" id="username" value="<?= old('username'); ?>">
                                     <div id="username" class="invalid-feedback">
                                         <?= $validation->getError('username'); ?>
                                     </div>

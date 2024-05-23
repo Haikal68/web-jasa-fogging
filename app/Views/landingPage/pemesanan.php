@@ -108,7 +108,7 @@
                                     status_order: status_order
                                 },
                                 success: function(response) {
-                                    location.href = "<?= base_url(); ?>";
+                                    location.href = "<?= base_url('user/success'); ?>";
                                 },
                                 error: function() {
                                     console.log('Failed to update order status.');

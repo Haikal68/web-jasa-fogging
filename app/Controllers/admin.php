@@ -45,13 +45,14 @@ class admin extends BaseController
 
         $data = [
             'title' => 'Data Users',
-            'user' => $this->UsersModel->getUsers()
+            'user' => $this->UsersModel->getAdmin()
         ];
         return view('admin/user', $data);
     }
 
     public function tambah_user()
     {
+
         $data = [
             'tittle' => 'Tambah User',
             'validation' => \Config\Services::validation(),
@@ -64,6 +65,8 @@ class admin extends BaseController
 
     public function save()
     {
+        $validation = \Config\Services::validation();
+
         //validasi 
         if (!$this->validate([
             'username' => [
@@ -71,9 +74,22 @@ class admin extends BaseController
                 'errors' => [
                     'required' => '{field} Harus Diisi.'
                 ]
+            ],
+            'email' => [
+                'rules' => 'required|valid_email',
+                'errors' => [
+                    'required' => '{field} Harus Diisi.',
+                    'valid_email' => 'Format {field} tidak valid.'
+                ]
+            ],
+            'fullname' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '{field} Harus Diisi.'
+                ]
             ]
-
         ])) {
+
             return redirect()->to('/admin/tambah_user')->withInput();
         }
 
@@ -226,21 +242,27 @@ class admin extends BaseController
         $tglAkhir = $this->request->getPost('tglAkhir');
 
         $orderModel = new OrdersModel();
-        $orders = $orderModel->where('tanggal_layanan >=', $tglAwal)
+        $orders = $orderModel->where('tanggal_pemesanan >=', $tglAwal)
             ->join('services', 'services.service_id = orders.service_id')
-            ->where('tanggal_layanan <=', $tglAkhir)->whereIn('status_order', ['paid', 'diproses', 'selesai'])
+            ->where('tanggal_pemesanan <=', $tglAkhir)->whereIn('status_order', ['paid', 'diproses', 'selesai'])
             ->findAll();
+
+        $pendapatan = $orderModel->selectSum('total_harga')->where('tanggal_pemesanan >=', $tglAwal)
+            ->where('tanggal_pemesanan <=', $tglAkhir)->whereIn('status_order', ['paid', 'diproses', 'selesai'])
+            ->get()->getRow();
+
+
         $dompdf = new \Dompdf\Dompdf();
         $dompdf->loadhtml(view('admin/print/printOrder', [
             'orders' => $orders,
-            'order' => $this->OrdersModel->getTotalPendapatan(),
+            'pendapatan' => $pendapatan,
             'tglAwal' => $tglAwal,
             'tglAkhir' => $tglAkhir
         ]));
 
         $dompdf->setPaper('A4', 'landscape');
         $dompdf->render();
-        $dompdf->stream();
+        $dompdf->stream('Laporan Pendapatan.pdf');
     }
 
     public function printUser()

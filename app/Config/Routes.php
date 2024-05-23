@@ -14,9 +14,10 @@ $routes->get('/admin/orders', 'admin::orders', ['filter' => 'role:admin,manager'
 $routes->get('/admin/services', 'admin::Services', ['filter' => 'role:admin,manager', 'login']);
 $routes->get('/admin/detailOrder/(:num)', 'admin::detailorder', ['filter' => 'role:admin,manager', 'login']);
 $routes->get('/admin/index', 'admin::index', ['filter' => 'role:admin,manager', 'login']);
+$routes->get('/admin/filterOrders', 'admin::filterOrders', ['filter' => 'role:manager', 'login']);
 $routes->get('/user/getForm/(:num)', 'user::getForm/$1', ['filter' => 'login']);
-$routes->get('/worker', 'worker::index', ['role:worker', 'filter' => 'login']);
-$routes->get('/worker/orderan', 'worker::order', ['role:worker', 'filter' => 'login']);
-$routes->get('/worker/prosesOrder', 'worker::prosesOrder', ['role:worker', 'filter' => 'login']);
+$routes->get('/worker', 'worker::index', ['filter' => 'role:worker', 'login']);
+$routes->get('/worker/orderan', 'worker::order', ['filter' => 'role:worker',  'login']);
+$routes->get('/worker/prosesOrder', 'worker::prosesOrder', ['filter' => 'role:worker', 'login']);
 
 // $routes->get('/dashboard', 'Home::dashboard');

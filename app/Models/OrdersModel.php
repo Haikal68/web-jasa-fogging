@@ -50,8 +50,8 @@ class OrdersModel extends Model
     public function getDetailOrders($order_id)
     {
         return $this->db->table('orders')->where('order_id', $order_id)
-            ->join('services', 'services.service_id = orders.service_id')
-            ->join('users', 'users.id = orders.teknisi_id')->get()->getRowArray();
+            ->join('services', 'services.service_id = orders.service_id', 'left')
+            ->join('users', 'users.id = orders.teknisi_id', 'left')->get()->getRowArray();
     }
 
     public function prosesOrder($data, $order_id)
